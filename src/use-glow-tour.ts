@@ -10,11 +10,29 @@ import type { GlowTourController } from './types';
 export function useGlowTour(): GlowTourController {
   const context = useContext(GlowTourContext);
   if (!context) {
-    throw new Error(
-      'useGlowTour must be used inside a <GlowTourProvider />.'
-    );
+    throw new Error('useGlowTour must be used inside a <GlowTourProvider />.');
   }
   // Strip the internal registry from the public surface
-  const { registry: _registry, ...controller } = context;
-  return controller;
+  const {
+    start,
+    stop,
+    next,
+    prev,
+    goTo,
+    isActive,
+    currentStep,
+    currentStepIndex,
+    totalSteps,
+  } = context;
+  return {
+    start,
+    stop,
+    next,
+    prev,
+    goTo,
+    isActive,
+    currentStep,
+    currentStepIndex,
+    totalSteps,
+  };
 }

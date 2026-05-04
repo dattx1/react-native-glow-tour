@@ -1,6 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { GlowTourProvider, GlowTarget, useGlowTour } from 'react-native-glow-tour';
+import {
+  GlowTourProvider,
+  GlowTarget,
+  useGlowTour,
+} from 'react-native-glow-tour';
 
 const TOUR_STEPS = [
   {
@@ -18,13 +22,15 @@ const TOUR_STEPS = [
   {
     id: 'card-actions',
     title: 'Action area',
-    description: 'You can place targets anywhere — inside scroll views, lists, even tab bars.',
+    description:
+      'You can place targets anywhere — inside scroll views, lists, even tab bars.',
     spotlightPadding: 12,
   },
   {
     id: 'fab',
     title: 'And we’re done!',
-    description: 'Tap Finish to dismiss. Hook in your own tooltip via the renderTooltip prop.',
+    description:
+      'Tap Finish to dismiss. Hook in your own tooltip via the renderTooltip prop.',
     tooltipPosition: 'top' as const,
   },
 ];

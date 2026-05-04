@@ -35,28 +35,30 @@ export function measureViewInWindow(
             return;
           }
 
-          view.measureInWindow((x: number, y: number, width: number, height: number) => {
-            const valid =
-              Number.isFinite(x) &&
-              Number.isFinite(y) &&
-              Number.isFinite(width) &&
-              Number.isFinite(height) &&
-              width > 0 &&
-              height > 0;
+          view.measureInWindow(
+            (x: number, y: number, width: number, height: number) => {
+              const valid =
+                Number.isFinite(x) &&
+                Number.isFinite(y) &&
+                Number.isFinite(width) &&
+                Number.isFinite(height) &&
+                width > 0 &&
+                height > 0;
 
-            if (valid) {
-              resolve({ x, y, width, height });
-              return;
+              if (valid) {
+                resolve({ x, y, width, height });
+                return;
+              }
+
+              attempts += 1;
+              if (attempts >= MEASURE_MAX_RETRIES) {
+                resolve(null);
+                return;
+              }
+
+              setTimeout(attempt, MEASURE_RETRY_DELAY);
             }
-
-            attempts += 1;
-            if (attempts >= MEASURE_MAX_RETRIES) {
-              resolve(null);
-              return;
-            }
-
-            setTimeout(attempt, MEASURE_RETRY_DELAY);
-          });
+          );
         });
       });
     };

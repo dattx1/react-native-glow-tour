@@ -61,8 +61,7 @@ export function GlowTourProvider({
         theme?.spotlightBorderWidth ?? DEFAULTS.spotlightBorderWidth,
       spotlightHaloWidth:
         theme?.spotlightHaloWidth ?? DEFAULTS.spotlightHaloWidth,
-      tooltipBackground:
-        theme?.tooltipBackground ?? DEFAULTS.tooltipBackground,
+      tooltipBackground: theme?.tooltipBackground ?? DEFAULTS.tooltipBackground,
       tooltipTextColor: theme?.tooltipTextColor ?? DEFAULTS.tooltipTextColor,
       accentColor: theme?.accentColor ?? DEFAULTS.accentColor,
     }),
@@ -76,8 +75,7 @@ export function GlowTourProvider({
   const [isActive, setIsActive] = useState(false);
   const [steps, setSteps] = useState<GlowTourStep[]>([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [position, setPosition] =
-    useState<ResolvedTooltipPosition>('bottom');
+  const [position, setPosition] = useState<ResolvedTooltipPosition>('bottom');
   const [tooltipLayout, setTooltipLayout] = useState<LayoutRectangle | null>(
     null
   );
@@ -121,11 +119,7 @@ export function GlowTourProvider({
   }, []);
 
   const showStep = useCallback(
-    async (
-      step: GlowTourStep,
-      isFirstShow: boolean,
-      tooltipHeight: number
-    ) => {
+    async (step: GlowTourStep, isFirstShow: boolean, tooltipHeight: number) => {
       const target: RegisteredTarget | undefined = registry.get(step.id);
       if (!target) {
         if (__DEV__) {
@@ -219,7 +213,9 @@ export function GlowTourProvider({
     (newSteps: GlowTourStep[]) => {
       if (newSteps.length === 0) {
         if (__DEV__) {
-          console.warn('[react-native-glow-tour] start() called with empty steps.');
+          console.warn(
+            '[react-native-glow-tour] start() called with empty steps.'
+          );
         }
         return;
       }
@@ -289,7 +285,7 @@ export function GlowTourProvider({
     if (!step) return;
     const tooltipHeight = tooltipLayout?.height ?? ESTIMATED_TOOLTIP_HEIGHT;
     const isFirstShow = overlayOpacity.value === 0;
-    void showStep(step, isFirstShow, tooltipHeight);
+    showStep(step, isFirstShow, tooltipHeight).catch(() => undefined);
   }, [
     isActive,
     currentStepIndex,
@@ -344,34 +340,34 @@ export function GlowTourProvider({
   );
 
   const tooltipNode =
-    currentStep != null
-      ? renderTooltip
-        ? renderTooltip({
-            step: currentStep,
-            stepIndex: currentStepIndex,
-            totalSteps,
-            isFirst,
-            isLast,
-            position,
-            next,
-            prev,
-            stop: handleSkip,
-          })
-        : (
-            <DefaultTooltip
-              step={currentStep}
-              stepIndex={currentStepIndex}
-              totalSteps={totalSteps}
-              isFirst={isFirst}
-              isLast={isLast}
-              position={position}
-              next={next}
-              prev={prev}
-              stop={handleSkip}
-              theme={resolvedTheme}
-            />
-          )
-      : null;
+    currentStep != null ? (
+      renderTooltip ? (
+        renderTooltip({
+          step: currentStep,
+          stepIndex: currentStepIndex,
+          totalSteps,
+          isFirst,
+          isLast,
+          position,
+          next,
+          prev,
+          stop: handleSkip,
+        })
+      ) : (
+        <DefaultTooltip
+          step={currentStep}
+          stepIndex={currentStepIndex}
+          totalSteps={totalSteps}
+          isFirst={isFirst}
+          isLast={isLast}
+          position={position}
+          next={next}
+          prev={prev}
+          stop={handleSkip}
+          theme={resolvedTheme}
+        />
+      )
+    ) : null;
 
   return (
     <GlowTourContext.Provider value={controllerValue}>

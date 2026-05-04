@@ -37,9 +37,7 @@ export function DefaultTooltip({
       ) : null}
 
       {step.description ? (
-        <Text
-          style={[styles.description, { color: theme.tooltipTextColor }]}
-        >
+        <Text style={[styles.description, { color: theme.tooltipTextColor }]}>
           {step.description}
         </Text>
       ) : null}
@@ -97,7 +95,9 @@ export function DefaultTooltip({
               pressed && styles.pressed,
             ]}
           >
-            <Text style={styles.primaryLabel}>{isLast ? 'Finish' : 'Next'}</Text>
+            <Text style={styles.primaryLabel}>
+              {isLast ? 'Finish' : 'Next'}
+            </Text>
           </Pressable>
         </View>
       </View>
